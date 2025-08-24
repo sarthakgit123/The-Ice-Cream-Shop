@@ -1,0 +1,8 @@
+html {
+  scroll-behavior: smooth;
+}
+.option{
+    margin: 50px;
+    display:flex;
+    justify-content: space-evenly;
+}
