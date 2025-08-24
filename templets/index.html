@@ -1,9 +1,12 @@
 {% extends "base.html" %}
 {% load static %}
 
+
 {% block title %}Home{% endblock title %}
 
 {% block body %}
+
+<!--navbar-->
 <div class="container-fluid my-0 px-0">
     <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
   <div class="carousel-indicators">
@@ -28,46 +31,65 @@
     <span class="visually-hidden">Next</span>
   </button>
 </div>
+
+<!--categories-->
+<h2>Categories</h2>
 <div class="option">
-    <div class="card" style="width: 18rem;">
-  <img src="..." class="card-img-top" alt="...">
+<div class="card" style="width: 18rem;">
+  <img src="{% static "ice5.webp" %}" class="card-img-top" alt="/flavours">
   <div class="card-body">
-    <h5 class="card-title">Card title</h5>
+    <h5 class="card-title">Flavours</h5>
     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-    <a href="#" class="btn btn-primary">Go somewhere</a>
+    <a href="/flavours" class="btn btn-primary">Go somewhere</a>
   </div>
 </div>
 <div class="card" style="width: 18rem;">
-  <img src="..." class="card-img-top" alt="...">
+  <img src="{% static "ice6.jpg" %}" style="height: 200px; object-fit: cover;" class="card-img-top" alt="...">
   <div class="card-body">
-    <h5 class="card-title">Card title</h5>
+    <h5 class="card-title">Family Packs</h5>
     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-    <a href="#" class="btn btn-primary">Go somewhere</a>
+    <a href="/family" class="btn btn-primary">Go somewhere</a>
   </div>
 </div>
 <div class="card" style="width: 18rem;">
-  <img src="..." class="card-img-top" alt="...">
+  <img src="{% static "ice9.jpg" %}"style="height: 200px; object-fit: cover;" class="card-img-top" alt="...">
   <div class="card-body">
-    <h5 class="card-title">Card title</h5>
+    <h5 class="card-title">Ice Cream Cakes</h5>
     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-    <a href="#" class="btn btn-primary">Go somewhere</a>
+    <a href="/cake" class="btn btn-primary">Go somewhere</a>
   </div>
 </div>
 </div>
 
-
-
+<!--about us-->
 <section id="about" class="vh-100 d-flex align-items-center justify-content-center bg-info text-white">
   <div class="text-center">
     <h2>About Us</h2>
     <p>We make fresh, tasty ice creams with love.</p>
   </div>
 </section>
+
+<!--contact us-->
 <section id="contact" class="vh-100 d-flex align-items-center justify-content-center bg-dark text-white">
   <div class="text-center">
     <h2>Contact Us</h2>
-    <p>Email: hello@icecream.com</p>
+    
+    <div class="mb-3">
+<form method="POST" action="">
+  {% csrf_token %}
+  
+  <div class="mb-3">
+    <label for="email">Email address</label>
+    <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com" required>
   </div>
+
+  <div class="mb-3">
+    <label for="reviews">Reviews</label>
+    <textarea class="form-control" id="reviews" name="reviews" rows="3" required></textarea>
+  </div>
+
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
 </section>
 
 
