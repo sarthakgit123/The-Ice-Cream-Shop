@@ -6,6 +6,32 @@ html {
     display:flex;
     justify-content: space-evenly;
 }
-.card{
-    
-}
+.candy-navbar {
+    background: linear-gradient(90deg, #ffb6c1, #ffd1dc); /* pastel pink gradient */
+  }
+
+  .candy-navbar .navbar-brand {
+    color: #6b4f4f; /* chocolatey brown for brand */
+    font-weight: bold;
+    font-family: Garamond;
+  }
+
+  .candy-navbar .nav-link {
+    color: #fffaf0; /* soft cream text */
+    font-weight: 500;
+    transition: color 0.3s ease;
+  }
+
+  .candy-navbar .nav-link:hover {
+    color: #6b4f4f; /* chocolate color on hover */
+  }
+
+  .candy-navbar .dropdown-menu {
+    background-color: #ffe4e1; /* light pastel for dropdown */
+  }
+
+  .candy-navbar .dropdown-item:hover {
+    background-color: #ffc1cc;
+    color: #6b4f4f;
+  }
+  
