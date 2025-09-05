@@ -1,0 +1,69 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+*{
+  scroll-behavior: smooth;
+  font-family: "Poppins", sans-serif ;
+}
+.option{
+    margin: 50px;
+    display:flex;
+    justify-content: space-evenly;
+}
+.candy-navbar {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 999;
+
+  /* Blur background */
+  background: rgba(232, 25, 79, 0.6); /* transparent pinkish */
+  backdrop-filter: blur(10px);        /* Gaussian blur */
+  -webkit-backdrop-filter: blur(10px); /* for Safari */
+
+  /* Text styling */
+  color: white;
+  font-weight: 500;
+
+  /* Optional: make it look nicer */
+  padding: 10px 20px;
+  display: flex;
+  justify-content: center; /* center items */
+  align-items: center;
+}
+
+
+  .candy-navbar .navbar-brand {
+    color: #6b4f4f; /* chocolatey brown for brand */
+    font-weight: bold;
+  
+  }
+
+  .candy-navbar .nav-link {
+    color: #fffaf0; /* soft cream text */
+    font-weight: 500;
+    transition: color 0.3s ease;
+  }
+
+  .candy-navbar .nav-link:hover {
+    color: #6b4f4f; /* chocolate color on hover */
+  }
+
+  .candy-navbar .dropdown-menu {
+    background-color: #ffe4e1; /* light pastel for dropdown */
+  }
+
+  .candy-navbar .dropdown-item:hover {
+    background-color: #ffc1cc;
+    color: #6b4f4f;
+  }
+  .lead{
+    display: flex-block;
+    align-items: center;
+    font-size: 1.2rem;
+    font-weight: 300;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  .btn-custom {
+    background-color:rgba(232, 25, 79, 0.6);
+}
