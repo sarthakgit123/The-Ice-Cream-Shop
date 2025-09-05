@@ -15,18 +15,21 @@
 
 
   <body>
+     
 <nav class="candy-navbar ">
       <div class="container">
       <div class="row align-items-center justify-content-around">
         <div class="logo col-6">
-          <img src="{% static "logo.png" %}" alt="hello" height="70px" width="70px">
+          <a href="/">
+            <img src="{% static "logo.png" %}" alt="hello"  height="70px" width="70px">
+          </a>
       
 
         </div>
         <div class="col-6">
   <ul class="nav justify-content-around g-5">
     <li class="nav-item"><a class="nav-link text-white" href="/">Home</a></li>
-    <li class="nav-item"><a class="nav-link text-white" href="#about">About Us</a></li>
+    <li class="nav-item"><a class="nav-link text-white" href="{% url 'home' %}#us">About Us</a></li>
 
     <!-- Category with dropdown -->
     <li class="nav-item dropdown">
@@ -35,20 +38,27 @@
       </a>
       <ul class="dropdown-menu" aria-labelledby="categoryDropdown">
         <li><a class="dropdown-item" href="/flavours">Flavours</a></li>
-        <li><a class="dropdown-item" href="/family">Family Packs</a></li>
-        <li><a class="dropdown-item" href="/cake">Cakes</a></li>
       </ul>
     </li>
 
-    <li class="nav-item"><a class="nav-link text-white" href="#contact">Contact Us</a></li>
-    <li class="nav-item"><a class="nav-link text-white" href="">Cart</a></li>
+    <li class="nav-item"><a class="nav-link text-white" href="{% url 'home' %}#contact">Contact Us</a></li>
+    <li class="nav-item"><a class="nav-link text-white" href="/cart">Cart 🛒</a></li>
+
   </ul>
 </div>
 
       </div>
     </div>
   </nav>
+  
 
+
+  
+  
+  
+
+  
+  <!--body-->
 {% block body %} {% endblock body %}
 
     <!-- Optional JavaScript; choose one of the two! -->

@@ -1,3 +1,78 @@
 {% extends "base.html" %}
+{% load static %}
+
 {% block title %}flavours{% endblock title %}
-{% block body %}categories{% endblock body %}
+
+
+
+<link rel="stylesheet" href="{% static 'flavours.css' %}">
+
+{% block body %}
+
+<div class="container my-4">
+  <div class="row justify-content-center">
+    <div class="col-md-10">
+      <img src="{% static 'familybg.avif' %}" alt="Family Pack Banner" class="img-fluid rounded-4 shadow-sm w-100"  style="object-fit: cover; border-radius: 40px;">
+    </div>
+  </div>
+</div>
+
+
+<div class="container text-center my-4">
+  <h2 class="fw-bold display-5" style=" letter-spacing: 1px;">
+    FAMILY PACK, NOW CREAMIER
+  </h2>
+  <p class="lead text-muted mt-3">
+    Perfect for sharing joyful moments and savouring delectable flavors together with your family
+  </p>
+</div>
+
+
+<div class="container my-5">
+  <div class="row g-4">
+
+    {% for product in products %}
+      <div class="col-md-3 col-sm-6">
+        <div class="card h-100 text-center shadow-sm">
+          <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
+          <div class="card-body">
+            <h5 class="card-title">{{ product.name }}</h5>
+            <p class="card-text">{{ product.description }}</p>
+            <p class="fw-bold">₹{{ product.price }}</p>
+            <a href="{% url 'addtocart' product.id %}" class="btn btn-danger">Buy Now</a>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+
+  </div>
+</div>
+
+<div id="mess" class="position-fixed top-0 end-0 p-3" style="z-index: 1100;">
+    {% if messages %}
+    {% for message in messages %}
+    <div class="toast align-items-center text-bg-{{ message.tags }} border-0 mb-2" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="d-flex">
+            <div class="toast-body">
+                {{ message }}
+            </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    </div>
+    {% endfor %}
+    {% endif %}
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var toastElList = [].slice.call(document.querySelectorAll('.toast'))
+    toastElList.map(function(toastEl) {
+        var t = new bootstrap.Toast(toastEl, { delay: 3000 })
+        t.show()
+        return t
+    })
+});
+</script>
+
+  
+{% endblock body %}
