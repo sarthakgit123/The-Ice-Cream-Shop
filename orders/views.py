@@ -1,17 +1,17 @@
-from django.shortcuts import get_object_or_404, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from .models import Cart, CartItem
-from products.models import Product
+from django.contrib import messages
+from django.db import transaction
 
+from .models import Cart, CartItem, Order, OrderItem
+from products.models import Product
 
 @login_required
 def add_to_cart(request, product_id):
     product = get_object_or_404(Product, id=product_id)
 
-    # get or create cart
     cart, created = Cart.objects.get_or_create(user=request.user)
 
-    # check if item already exists
     cart_item, created = CartItem.objects.get_or_create(
         cart=cart,
         product=product
@@ -21,77 +21,91 @@ def add_to_cart(request, product_id):
         cart_item.quantity += 1
         cart_item.save()
 
+    messages.success(request, "Item added to cart")
     return redirect('view_cart')
-
-from django.shortcuts import render
 
 @login_required
 def view_cart(request):
-    cart = Cart.objects.filter(user=request.user).first()
+    cart, created = Cart.objects.get_or_create(user=request.user)
+    items = cart.items.select_related('product')
 
-    total = 0
-    items = []
+    total = sum(item.product.price * item.quantity for item in items)
 
-    if cart:
-        items = cart.items.all()
-        for item in items:
-            total += item.product.price * item.quantity
-
-    return render(request, 'cart.html', {
-        'cart_items': items,
+    return render(request, 'orders/cart.html', {
+        'cart': cart,
+        'items': items,
         'total': total
     })
 
-from django.db import transaction
-from .models import Order, OrderItem
+@login_required
+def update_cart_item(request, item_id):
+    item = get_object_or_404(CartItem, id=item_id, cart__user=request.user)
+
+    quantity = int(request.POST.get('quantity', 1))
+
+    if quantity > 0:
+        item.quantity = quantity
+        item.save()
+    else:
+        item.delete()
+
+    return redirect('view_cart')
 
 @login_required
-def checkout(request):
-    cart = Cart.objects.filter(user=request.user).first()
+def remove_from_cart(request, item_id):
+    item = get_object_or_404(CartItem, id=item_id, cart__user=request.user)
+    item.delete()
 
-    if not cart or cart.items.count() == 0:
+    messages.success(request, "Item removed")
+    return redirect('view_cart')
+
+@login_required
+@transaction.atomic
+def place_order(request):
+    cart = get_object_or_404(Cart, user=request.user)
+    items = cart.items.select_related('product')
+
+    if not items.exists():
+        messages.error(request, "Cart is empty")
         return redirect('view_cart')
 
-    with transaction.atomic():  # 🔥 IMPORTANT
-        total = 0
+    total_price = 0
 
-        # calculate total
-        for item in cart.items.all():
-            total += item.product.price * item.quantity
+    # Calculate total
+    for item in items:
+        total_price += item.product.price * item.quantity
 
-        # create order
-        order = Order.objects.create(
-            user=request.user,
-            total_price=total,
-            status='pending'
-        )
+    # Create Order
+    order = Order.objects.create(
+        user=request.user,
+        total_price=total_price,
+        status='pending'
+    )
 
-        # create order items + update stock
-        for item in cart.items.all():
-            product = item.product
+    # Create Order Items
+    order_items = []
+    for item in items:
+        order_items.append(OrderItem(
+            order=order,
+            product=item.product,
+            quantity=item.quantity,
+            price=item.product.price  # snapshot price
+        ))
 
-            if product.stock < item.quantity:
-                raise Exception(f"{product.name} is out of stock")
+    OrderItem.objects.bulk_create(order_items)
 
-            OrderItem.objects.create(
-                order=order,
-                product=product,
-                quantity=item.quantity,
-                price=product.price
-            )
+    # Clear Cart
+    items.delete()
 
-            # reduce stock
-            product.stock -= item.quantity
-            if product.stock == 0:
-                product.is_available = False
-            product.save()
+    messages.success(request, "Order placed successfully!")
+    return redirect('order_detail', order_id=order.id)
 
-        # clear cart
-        cart.delete()
+@login_required
+def order_detail(request, order_id):
+    order = get_object_or_404(Order, id=order_id, user=request.user)
+    items = order.items.select_related('product')
 
-    return redirect('order_success')
-
-from django.http import HttpResponse
-
-def order_success(request):
-    return HttpResponse("Order placed successfully!")
+    return render(request, 'orders/order_detail.html', {
+        'order': order,
+        'items': items
+    })
