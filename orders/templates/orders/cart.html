@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2>🛒 My Cart</h2>
+
+{% if items %}
+
+<table class="table">
+
+    <tr>
+        <th>Product</th>
+        <th>Price</th>
+        <th>Qty</th>
+        <th>Total</th>
+        <th>Action</th>
+    </tr>
+
+    {% for item in items %}
+
+    <tr>
+        <td>{{ item.product.name }}</td>
+
+        <td>₹{{ item.product.price }}</td>
+
+        <td>
+
+            <form method="POST"
+                  action="{% url 'update_cart_item' item.id %}">
+                {% csrf_token %}
+
+                <input type="number"
+                       name="quantity"
+                       value="{{ item.quantity }}"
+                       min="1">
+
+                <button type="submit">
+                    Update
+                </button>
+            </form>
+
+        </td>
+
+        <td>
+            ₹{{ item.product.price|floatformat:2 }}
+        </td>
+
+        <td>
+
+            <a href="{% url 'remove_from_cart' item.id %}"
+               class="btn btn-danger">
+                Remove
+            </a>
+
+        </td>
+
+    </tr>
+
+    {% endfor %}
+
+</table>
+
+<h3>Total: ₹{{ total }}</h3>
+
+<a href="{% url 'place_order' %}"
+   class="btn btn-success">
+    Place Order
+</a>
+
+{% else %}
+
+<p>Cart is empty.</p>
+
+{% endif %}
+
+{% endblock %}

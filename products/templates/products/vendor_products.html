@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2>My Products</h2>
+
+<a href="{% url 'add_product' %}">
+    Add New Product
+</a>
+
+<hr>
+
+{% for product in products %}
+
+<div style="border:1px solid black; padding:10px; margin:10px;">
+
+    <h3>{{ product.name }}</h3>
+
+    <p>₹{{ product.price }}</p>
+
+    <p>Stock: {{ product.stock }}</p>
+
+    <a href="{% url 'update_product' product.id %}">
+        Edit
+    </a>
+
+    |
+
+    <a href="{% url 'delete_product' product.id %}">
+        Delete
+    </a>
+
+</div>
+
+{% empty %}
+    <p>No products added yet.</p>
+{% endfor %}
+
+{% endblock %}

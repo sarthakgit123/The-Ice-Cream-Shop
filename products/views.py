@@ -47,35 +47,6 @@ def add_product(request):
 
     return render(request, 'products/add_product.html')
 
-
-@login_required
-def add_product(request):
-    if not request.user.is_vendor:
-        return redirect('home')
-
-    vendor = get_object_or_404(Vendor, user=request.user)
-
-    if request.method == 'POST':
-        name = request.POST.get('name')
-        price = request.POST.get('price')
-        description = request.POST.get('description')
-        stock = request.POST.get('stock')
-        image = request.FILES.get('image')
-
-        Product.objects.create(
-            name=name,
-            price=price,
-            description=description,
-            stock=stock,
-            image=image,
-            vendor=vendor
-        )
-
-        messages.success(request, "Product added")
-        return redirect('vendor_dashboard')
-
-    return render(request, 'products/add_product.html')
-
 @login_required
 def delete_product(request, product_id):
     product = get_object_or_404(Product, id=product_id)

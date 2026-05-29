@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2>Add Product</h2>
+
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <p>
+        Name:
+        <input type="text" name="name">
+    </p>
+
+    <p>
+        Price:
+        <input type="number" name="price">
+    </p>
+
+    <p>
+        Description:
+        <textarea name="description"></textarea>
+    </p>
+
+    <p>
+        Stock:
+        <input type="number" name="stock">
+    </p>
+
+    <p>
+        Image:
+        <input type="file" name="image">
+    </p>
+
+    <button type="submit">Add Product</button>
+
+</form>
+
+{% endblock %}
