@@ -2,82 +2,69 @@
 
 {% block content %}
 
-<div class="container mt-4">
+<div style="margin-bottom:1.5rem;">
+    <h1 style="font-size:20px; font-weight:500;">Dashboard</h1>
+    <p style="font-size:13px; color:#999; margin-top:3px;">Welcome back, {{ request.user.username }}</p>
+</div>
 
-    <h2 class="mb-4">🏪 Vendor Dashboard</h2>
+<!-- Shop info card -->
+<div style="background:#fff; border:1px solid rgba(0,0,0,.08); border-radius:12px; padding:1.5rem; margin-bottom:1.25rem; display:flex; align-items:flex-start; gap:1.25rem;">
 
-    <div class="card mb-4">
-        <div class="card-body">
+    <div style="width:48px; height:48px; border-radius:10px; background:#f0f0ee; display:flex; align-items:center; justify-content:center; font-size:22px; flex-shrink:0;">
+        🏪
+    </div>
 
-            <h4>{{ vendor.shop_name }}</h4>
+    <div style="flex:1;">
+        <div style="font-size:16px; font-weight:500; margin-bottom:10px;">{{ vendor.shop_name }}</div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px 1.5rem;">
 
-            <p>
-                <strong>Address:</strong><br>
-                {{ vendor.address }}
-            </p>
+            <div style="display:flex; flex-direction:column; gap:2px;">
+                <span style="font-size:11px; color:#aaa; text-transform:uppercase; letter-spacing:0.04em;">Address</span>
+                <span style="font-size:13px;">{{ vendor.address }}</span>
+            </div>
 
-            <p>
-                <strong>Phone:</strong>
-                {{ vendor.phone }}
-            </p>
+            <div style="display:flex; flex-direction:column; gap:2px;">
+                <span style="font-size:11px; color:#aaa; text-transform:uppercase; letter-spacing:0.04em;">Phone</span>
+                <span style="font-size:13px;">{{ vendor.phone }}</span>
+            </div>
 
-            <p>
-                <strong>Username:</strong>
-                {{ request.user.username }}
-            </p>
+            <div style="display:flex; flex-direction:column; gap:2px;">
+                <span style="font-size:11px; color:#aaa; text-transform:uppercase; letter-spacing:0.04em;">Username</span>
+                <span style="font-size:13px;">{{ request.user.username }}</span>
+            </div>
 
-            <p>
-                <strong>Email:</strong>
-                {{ request.user.email }}
-            </p>
+            <div style="display:flex; flex-direction:column; gap:2px;">
+                <span style="font-size:11px; color:#aaa; text-transform:uppercase; letter-spacing:0.04em;">Email</span>
+                <span style="font-size:13px;">{{ request.user.email }}</span>
+            </div>
 
         </div>
     </div>
 
-    <div class="row">
+</div>
 
-        <div class="col-md-4 mb-3">
-            <div class="card text-center shadow-sm">
-                <div class="card-body">
-                    <h5>Add Product</h5>
-                    <p>Add a new ice cream product.</p>
+<!-- Action cards -->
+<div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:1rem;">
 
-                    <a href="{% url 'add_product' %}"
-                       class="btn btn-success">
-                        Add Product
-                    </a>
-                </div>
-            </div>
-        </div>
+    <div style="background:#fff; border:1px solid rgba(0,0,0,.08); border-radius:12px; padding:1.25rem; display:flex; flex-direction:column; gap:6px;">
+        <div style="width:36px; height:36px; border-radius:8px; background:#f5f5f3; display:flex; align-items:center; justify-content:center; font-size:18px; margin-bottom:4px;">+</div>
+        <div style="font-size:14px; font-weight:500;">Add product</div>
+        <div style="font-size:12px; color:#999; flex:1;">List a new ice cream flavour.</div>
+        <a href="{% url 'add_product' %}" style="font-size:12px; font-weight:500; color:#1a1a1a; text-decoration:none; margin-top:4px;">Go →</a>
+    </div>
 
-        <div class="col-md-4 mb-3">
-            <div class="card text-center shadow-sm">
-                <div class="card-body">
-                    <h5>My Products</h5>
-                    <p>Manage your product catalog.</p>
+    <div style="background:#fff; border:1px solid rgba(0,0,0,.08); border-radius:12px; padding:1.25rem; display:flex; flex-direction:column; gap:6px;">
+        <div style="width:36px; height:36px; border-radius:8px; background:#f5f5f3; display:flex; align-items:center; justify-content:center; font-size:18px; margin-bottom:4px;">🧁</div>
+        <div style="font-size:14px; font-weight:500;">My products</div>
+        <div style="font-size:12px; color:#999; flex:1;">Manage your product catalog.</div>
+        <a href="{% url 'vendor_products' %}" style="font-size:12px; font-weight:500; color:#1a1a1a; text-decoration:none; margin-top:4px;">Go →</a>
+    </div>
 
-                    <a href="{% url 'vendor_products' %}"
-                       class="btn btn-primary">
-                        View Products
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-4 mb-3">
-            <div class="card text-center shadow-sm">
-                <div class="card-body">
-                    <h5>Update Profile</h5>
-                    <p>Edit shop information.</p>
-
-                    <a href="{% url 'update_vendor' %}"
-                       class="btn btn-warning">
-                        Update Profile
-                    </a>
-                </div>
-            </div>
-        </div>
-
+    <div style="background:#fff; border:1px solid rgba(0,0,0,.08); border-radius:12px; padding:1.25rem; display:flex; flex-direction:column; gap:6px;">
+        <div style="width:36px; height:36px; border-radius:8px; background:#f5f5f3; display:flex; align-items:center; justify-content:center; font-size:18px; margin-bottom:4px;">✎</div>
+        <div style="font-size:14px; font-weight:500;">Update profile</div>
+        <div style="font-size:12px; color:#999; flex:1;">Edit shop information.</div>
+        <a href="{% url 'update_vendor' %}" style="font-size:12px; font-weight:500; color:#1a1a1a; text-decoration:none; margin-top:4px;">Go →</a>
     </div>
 
 </div>

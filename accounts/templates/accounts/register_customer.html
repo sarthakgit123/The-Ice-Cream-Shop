@@ -2,43 +2,54 @@
 
 {% block content %}
 
-<div class="container mt-5" style="max-width: 500px;">
+<div style="display:flex; justify-content:center; padding:2.5rem 1rem;">
+<div style="width:100%; max-width:440px; background:#fff; border:1px solid rgba(0,0,0,.08); border-radius:12px; padding:2rem;">
 
-    <h2 class="mb-4">🍦 Customer Registration</h2>
+    <div style="margin-bottom:1.75rem;">
+        <h1 style="font-size:18px; font-weight:500;">Create an account</h1>
+        <p style="font-size:13px; color:#999; margin-top:4px;">Join Ice Cream Shop as a customer</p>
+    </div>
 
     <form method="POST">
         {% csrf_token %}
 
-        <div class="mb-3">
-            <label>Username</label>
-            <input type="text" name="username" class="form-control" required>
+        <div style="display:flex; flex-direction:column; gap:6px; margin-bottom:1rem;">
+            <label style="font-size:12px; color:#666;">Username</label>
+            <input type="text" name="username" required placeholder="e.g. sarthak_ice"
+                   style="background:#f9f9f7; border:1px solid rgba(0,0,0,.12); border-radius:7px; padding:9px 12px; font-size:14px; color:#1a1a1a; outline:none; width:100%;">
         </div>
 
-        <div class="mb-3">
-            <label>Email</label>
-            <input type="email" name="email" class="form-control" required>
+        <div style="display:flex; flex-direction:column; gap:6px; margin-bottom:1rem;">
+            <label style="font-size:12px; color:#666;">Email</label>
+            <input type="email" name="email" required placeholder="you@example.com"
+                   style="background:#f9f9f7; border:1px solid rgba(0,0,0,.12); border-radius:7px; padding:9px 12px; font-size:14px; color:#1a1a1a; outline:none; width:100%;">
         </div>
 
-        <div class="mb-3">
-            <label>Password</label>
-            <input type="password" name="password" class="form-control" required>
+        <div style="display:flex; flex-direction:column; gap:6px; margin-bottom:1rem;">
+            <label style="font-size:12px; color:#666;">Password</label>
+            <input type="password" name="password" required placeholder="••••••••"
+                   style="background:#f9f9f7; border:1px solid rgba(0,0,0,.12); border-radius:7px; padding:9px 12px; font-size:14px; color:#1a1a1a; outline:none; width:100%;">
         </div>
 
-        <div class="mb-3">
-            <label>Confirm Password</label>
-            <input type="password" name="confirm_password" class="form-control" required>
+        <div style="display:flex; flex-direction:column; gap:6px; margin-bottom:1rem;">
+            <label style="font-size:12px; color:#666;">Confirm password</label>
+            <input type="password" name="confirm_password" required placeholder="••••••••"
+                   style="background:#f9f9f7; border:1px solid rgba(0,0,0,.12); border-radius:7px; padding:9px 12px; font-size:14px; color:#1a1a1a; outline:none; width:100%;">
         </div>
 
-        <button type="submit" class="btn btn-primary">
-            Register
-        </button>
-
-        <a href="{% url 'login' %}" class="btn btn-secondary">
-            Login
-        </a>
+        <div style="display:flex; gap:8px; margin-top:1.5rem;">
+            <button type="submit"
+                    style="flex:1; font-size:13px; padding:9px 20px; border-radius:7px; border:none; background:#1a1a1a; color:#fff; font-weight:500; cursor:pointer;">
+                Register
+            </button>
+            <a href="{% url 'login' %}"
+               style="font-size:13px; padding:9px 20px; border-radius:7px; border:1px solid rgba(0,0,0,.12); background:transparent; color:#666; text-decoration:none; white-space:nowrap;">
+                Login instead
+            </a>
+        </div>
 
     </form>
-
+</div>
 </div>
 
 {% endblock %}

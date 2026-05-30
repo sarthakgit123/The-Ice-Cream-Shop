@@ -4,20 +4,20 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    # Django Admin
     path('admin/', admin.site.urls),
 
-    # Products App (Home Page)
-    path('', include('products.urls')),
+    # Home, Login, Register, Profile
+    path('', include('accounts.urls')),
 
-    # Accounts App
-    path('accounts/', include('accounts.urls')),
-
-    # Orders App
+    # Cart, Checkout, Orders
     path('orders/', include('orders.urls')),
+
+    # Product-related URLs
+    path('products/', include('products.urls')),
 ]
 
-# Media files (for product images)
 if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL,
-                          document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(
+        settings.MEDIA_URL,
+        document_root=settings.MEDIA_ROOT
+    )

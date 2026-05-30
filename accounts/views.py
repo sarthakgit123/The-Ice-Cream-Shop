@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-
+from products.models import Product
 from .models import User, Vendor
 
 def register_customer(request):
@@ -141,4 +141,14 @@ def vendor_dashboard(request):
 
     return render(request, 'accounts/vendor_dashboard.html', {
         'vendor': vendor
+    })
+
+def home(request):
+    if request.user.is_authenticated and request.user.is_vendor:
+        return redirect('vendor_dashboard')
+
+    products = Product.objects.all()
+
+    return render(request, 'accounts/home.html', {
+        'products': products
     })

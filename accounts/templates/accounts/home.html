@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div style="margin-bottom: 1.5rem;">
+    <h1 style="font-size: 20px; font-weight: 500;">All ice creams</h1>
+    <p style="font-size: 13px; color: #999; margin-top: 2px;">
+        {{ products.count }} flavour{{ products.count|pluralize }} available
+    </p>
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1rem;">
+
+    {% for product in products %}
+    <div style="background: #fff; border: 1px solid rgba(0,0,0,.08); border-radius: 12px; overflow: hidden; display: flex; flex-direction: column;">
+
+        {% if product.image %}
+            <img src="{{ product.image.url }}"
+                 alt="{{ product.name }}"
+                 style="width: 100%; height: 160px; object-fit: cover; flex-shrink: 0;">
+        {% else %}
+            <div style="height: 160px; background: #f5f5f3; display: flex; align-items: center; justify-content: center; font-size: 40px; flex-shrink: 0;">
+                🍦
+            </div>
+        {% endif %}
+
+        <div style="padding: 12px 14px; flex: 1; display: flex; flex-direction: column; gap: 4px;">
+            <div style="font-size: 14px; font-weight: 500;">{{ product.name }}</div>
+            <div style="font-size: 12px; color: #666; line-height: 1.5; flex: 1;">
+                {{ product.description|truncatewords:15 }}
+            </div>
+            <div style="font-size: 11px; color: #aaa; margin-top: 2px;">
+                by {{ product.vendor.shop_name }}
+            </div>
+        </div>
+
+        <div style="padding: 10px 14px; border-top: 1px solid rgba(0,0,0,.08); display: flex; align-items: center; justify-content: space-between; gap: 8px;">
+            <span style="font-size: 15px; font-weight: 500;">₹{{ product.price }}</span>
+            <div style="display: flex; gap: 6px;">
+                <a href="{% url 'product_detail' product.id %}"
+                   style="font-size: 12px; padding: 5px 12px; border-radius: 6px; border: 1px solid rgba(0,0,0,.15); color: #1a1a1a; text-decoration: none; white-space: nowrap;">
+                    Details
+                </a>
+                {% if user.is_authenticated and not user.is_vendor %}
+                <form method="POST" action="{% url 'add_to_cart' product.id %}" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="submit"
+                            style="font-size: 12px; padding: 5px 12px; border-radius: 6px; border: none; background: #1a1a1a; color: #fff; cursor: pointer; white-space: nowrap;">
+                        Add to cart
+                    </button>
+                </form>
+                {% endif %}
+            </div>
+        </div>
+
+    </div>
+    {% empty %}
+    <div style="grid-column: 1 / -1; text-align: center; padding: 3rem 0; color: #aaa; font-size: 14px;">
+        No ice creams listed yet.
+    </div>
+    {% endfor %}
+
+</div>
+
+{% endblock %}
